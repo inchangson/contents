@@ -21,5 +21,6 @@ urlpatterns = [
 
     # Log-Sign
     path('log_sign/', include('log_sign.urls')),
+    # Bulletin
     path('bulletin/', include('bulletin.urls')),
 ]

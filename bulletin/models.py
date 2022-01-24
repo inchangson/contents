@@ -4,6 +4,7 @@ from sqlalchemy import null
 from log_sign.models import User
 # Create your models here.
 
+# 게시판 피드 객체
 class BulletinFeed(models.Model):
 #    id = models.IntegerField(primary_key=True)
     title       = models.CharField(max_length=255,  null=True)
