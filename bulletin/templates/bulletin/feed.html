@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{%extends 'bulletin/tempExtendLayout.html'%}
+{%block content%}
+
+<!--board html-->
+
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta http-equiv="X-UA-Compatible" content="IE=edge"> {% endcomment %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    
+    <title>MyPetDiary</title>
+</head>
+<style>
+    .main_body{
+      display: flex;
+      background-color: whitesmoke; 
+      margin-right: 20px; 
+      margin-left: 20px; 
+      margin-top: 10px; 
+      margin-bottom: 10px;
+      height: 500px; 
+    }
+    .contour{
+        height: 2px; 
+        background-color: lightgrey;
+    }
+  </style>
+
+<body>
+    <div class="main_body">
+        <div class="container">
+            <br>
+            <div>
+                <button type="button" class="btn btn-default pull-right" onclick="location.href='../' ">
+                    <b>📜목록</b>
+                </button>
+                <button type="button" class="btn btn-default pull-right" onclick="location.href='../upload/' ">
+                    <b>✋글쓰기</b>
+                </button>
+            </div>
+
+            <div>
+                <br><br>
+                <div class="contour"></div>
+                <br>
+                <b style="font-size:35px">{{feed.title}}</b>
+                <div></div>
+                <button type="button" aria-label="Left Align">
+                    <b>작성자:  
+                        {% if not feed.user.name %}
+                            알 수 없음
+                        {% else %}
+                            {{feed.user.name}}
+                        {% endif %}
+                    </b>                
+                </button>
+                <div style="height: 0px; background-color: black"></div>
+                <p> time: {{feed.upload_time}}</p>
+                <div class="contour"></div>
+                <br><br>
+                <p>
+                    {% if not feed.content %}
+                        내용 없음
+                    {% else %}
+                        {{feed.content}}
+                    {% endif %}
+                </p>  
+            </div>          
+        </div>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</body>
+
+{%endblock%}
+</html>
