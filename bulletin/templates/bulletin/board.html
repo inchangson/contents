@@ -68,28 +68,20 @@
 
             <hr>
             <div class="pagination">
-                {% if boards.has_previous%}
+                {% if board.has_previous%}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ boards.previous_page_number}}">◁</a>
+                    <a class="page-link" href="?page={{ board.previous_page_number}}">◁</a>
                 </li>
-                {% else %}
-                {% comment %} <li class="page-item disable">
-                    <a class="page-link" href="">◁</a>
-                </li> {% endcomment %}
                 {% endif %}
 
                 <li class="page-item">
-                    <a class="page-link" href="">{{boards.number}} / {{boards.paginator.num_pages}}</a>
+                    <a class="page-link" href="">{{board.number}} / {{board.paginator.num_pages}}</a>
                 </li>
                 
-                {% if boards.has_next%}
+                {% if board.has_next%}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ boards.next_page_number}}">▷</a>
+                    <a class="page-link" href="?page={{ board.next_page_number}}">▷</a>
                 </li>
-                {% else %}
-                {% comment %} <li class="page-item disable">
-                    <a class="page-link" href="">▷</a>
-                </li>    {% endcomment %}
                 {% endif %}
 
             </div>
