@@ -12,8 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     
+
     <title>MyPetDiary</title>
 </head>
 <style>
@@ -68,16 +70,25 @@
 
             <hr>
             <div class="pagination">
-                {% if board.has_previous%}
+                {% if board.has_previous %}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ board.previous_page_number}}">◁</a>
                 </li>
                 {% endif %}
 
+                {% for page_num in page_range %}
                 <li class="page-item">
-                    <a class="page-link" href="">{{board.number}} / {{board.paginator.num_pages}}</a>
+                    <a class="page-link" href="?page={{page_num}}">
+                        {% if board_number == page_num%}
+                            <b><u>{{page_num}}</u></b>
+                        {% else %}
+                            {{page_num}}
+                        {% endif %}
+
+                    </a>
                 </li>
-                
+                {% endfor %}
+
                 {% if board.has_next%}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ board.next_page_number}}">▷</a>

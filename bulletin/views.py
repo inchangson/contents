@@ -13,18 +13,23 @@ def board(request):
     # query param 으로 넘어오는 page 값
     current_page      = int(request.GET.get('page', 1))
     # 한 페이지 당 5개 피드
-    paginator = Paginator(feeds, 5)
+    feed_count = 5
+    paginator  = Paginator(feeds, feed_count)
     
     last_page = paginator.num_pages
 
     # 최대페이지보다 클 경우 요청 페이지를 마지막 페이지로
     current_page = min(current_page, last_page)
+
     # 출력 범위 설정
-    start_page = (current_page - 1) // 10 * 10 + 1
-    end_page = min(start_page + 9, last_page)
+    print_range = 5
+    start_page = (current_page - 1) // print_range * print_range + 1
+    end_page = min(start_page + (print_range - 1), last_page)
     
     board = paginator.page(current_page)
-    return render(request, 'bulletin/board.html',{'board':board, 'page_range' : range(start_page, end_page + 1)})
+    context = {'board':board,  'board_number' : current_page, 'page_range' : range(start_page, end_page + 1),}
+
+    return render(request, 'bulletin/board.html', context)
 
 def feed(request, feed_id):
     # feed = BulletinFeed.objects.get(id = feed_id)
