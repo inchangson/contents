@@ -3,9 +3,18 @@ from .models import User
 from rest_framework.views import APIView
 
 # Create your views here.
+
+
 class Main(APIView):
     def get(self, request):
-        return render(request, 'log_sign/main.html')
+        print(request.user.username)
+        print(request.user.email)
+        username = request.data.get('username')
+        user = User.objects.filter(user=username).first()
+        request.session['loginCheck'] = True
+        request.session['username'] = user.username
+        return render(request, 'photo_zone/main.html')
+
 
 def signup(request):
     if request.method == 'POST':

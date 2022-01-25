@@ -10,13 +10,16 @@
     <meta charset="UTF-8">
     {% comment %} <meta http-equiv="X-UA-Compatible" content="IE=edge"> {% endcomment %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     
 
-    <title>MyPetDiary</title>
+    <title>MyPetDiary-Board</title>
 </head>
 <style>
     .main_body{
@@ -61,7 +64,7 @@
                     <tr>
                         <td>{{feed.id}}</td>
                         <td><a href="./{{feed.id}}"><b>{{feed.title}}</b></a></td>
-                        <td>{{feed.user.name}}</td>
+                        <td>{{feed.user.username}}</td>
                         <td>{{feed.upload_time}}</td>
                     </tr>
                     {%endfor%}

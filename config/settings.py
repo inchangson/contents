@@ -25,7 +25,7 @@ SECRET_KEY = 'dq54u_n$e*yv1u-ka3-hrsz+*^#(7+=&gm+lp#ea8k%x&!&)3a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'log_sign', 
     'bulletin', 
     'photo_zone',
-	'freeboard', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -133,3 +132,8 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'log_sign.User'
 LOGIN_REDIRECT_URL = '/log_sign/login/'
 LOGOUT_REDIRECT_URL = '/log_sign/login/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

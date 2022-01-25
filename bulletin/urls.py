@@ -11,5 +11,6 @@ urlpatterns = [
     path('upload/', views.upload, name='upload'),
 	
     path('<int:feed_id>/modify/', views.modify, name='modify'),
-    path('<int:feed_id>/delete/', views.delete, name='delete'),
+    path('<int:feed_id>/delete/', views.delete, name='delete'),    
+	path('add_reply/', views.add_reply, name='add_reply'),
 ]

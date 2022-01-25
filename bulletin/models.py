@@ -13,6 +13,14 @@ class BulletinFeed(models.Model):
     #txt_path로 바꿀지 확인
     content     = models.TextField(max_length=255,  null=True)    
     img_path    = models.CharField(max_length=255,  null=True)
+    reply_count = models.IntegerField(default=0)
     user        = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
-	def __str__(self):
-		return self.subject
+	
+    def __str__(self):
+        return self.subject
+
+class BulletinReply(models.Model):
+    created_at   = models.DateTimeField(auto_now_add=True)
+    content      = models.TextField()
+    user         = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
+    bulletinfeed = models.ForeignKey(BulletinFeed, on_delete=models.SET_NULL, null = True)
