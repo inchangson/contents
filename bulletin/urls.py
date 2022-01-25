@@ -9,4 +9,7 @@ urlpatterns = [
     path('<int:feed_id>/', views.feed),
     # 글쓰기
     path('upload/', views.upload, name='upload'),
+	
+    path('<int:feed_id>/modify/', views.modify, name='modify'),
+    path('<int:feed_id>/delete/', views.delete, name='delete'),
 ]
