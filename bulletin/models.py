@@ -5,7 +5,7 @@ from log_sign.models import User
 # Create your models here.
 
 # 게시판 피드 객체
-class BulletinFeed(models.Model):
+class Post(models.Model):
 #    id = models.IntegerField(primary_key=True)
     title       = models.CharField(max_length=255,  null=True)
     write_date = models.DateTimeField(null=True)
@@ -27,6 +27,6 @@ class BulletinReply(models.Model):
     created_at   = models.DateTimeField(auto_now_add=True)
     content      = models.TextField()
     user         = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
-    bulletinfeed = models.ForeignKey(BulletinFeed, on_delete=models.CASCADE, null = True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null = True)
     view_count  = models.PositiveIntegerField(default=0)
     

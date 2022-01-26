@@ -25,11 +25,11 @@
             <br><br>
             <div class="contour"></div>
             <br>
-            <b style="font-size:35px">{{feed.title}}</b>   
+            <b style="font-size:35px">{{post.title}}</b>   
             <a href="#" aria-label="Left Align" style="color:gray; text-decoration-line:underline">
                     작성자 :    
-                    {% if feed.user.username %}
-                        {{feed.user.username}}
+                    {% if post.user.username %}
+                        {{post.user.username}}
                     {% else %}
                         알 수 없음
                     {% endif %}              
@@ -74,20 +74,20 @@
 {% comment %} <script>
     $('.write_reply').click(function () {
         console.log($(this).prev().val());
-        console.log($(this).attr('feed_id'));
+        console.log($(this).attr('post'));
         let success = false;
         let content = $(this).prev().val();
         console.log(content);
-        let feed_id = Number($(this).attr('feed_id'));
-        console.log(feed_id)
-        console.log({{feed.user.id}})
+        let post = Number($(this).attr('post'));
+        console.log(post_id)
+        console.log({{post.user.id}})
 
         $.ajax({
             url: "/bulletin/add_reply",
             data: {
                 user_id: '{{ user.id }}',
                 content: content,
-                feed_id: feed_id
+                post_id: post_id
             },
             method: "POST",
             dataType: "json",
@@ -104,7 +104,7 @@
         });
         console.log(success)
         if(success == true){
-            $(this).parent().prev().append('<span class="feed_txt"><b> {{ user.username }}</b> '+ content +' </span>');
+            $(this).parent().prev().append('<span class="post_txt"><b> {{ user.username }}</b> '+ content +' </span>');
             $('.write_reply_input').val('');
         }
     });
