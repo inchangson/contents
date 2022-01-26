@@ -2,12 +2,16 @@ from django.shortcuts import redirect, render
 from .models import User
 from rest_framework.views import APIView
 
+from bulletin.models import Post
+from django.core.paginator import Paginator
 # Create your views here.
 
 
 class Main(APIView):
     def get(self, request):
-        return render(request, 'log_sign/main.html')
+        feeds = Post.objects.all().order_by('-write_date')
+        page  = Paginator(feeds, 5).page(1)
+        return render(request, 'log_sign/main.html', {'bulletin_page':page})
 
 
 def signup(request):
