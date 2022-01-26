@@ -62,7 +62,8 @@ def upload(request):
         form = PostForm()
 
     return render(request, 'bulletin/upload.html', {'form':form})
-    
+
+
 def modify(request, post_id):
     login_session = request.session.get('login_session', '')
     context = {'login_session' : login_session}
@@ -75,7 +76,7 @@ def modify(request, post_id):
     #     return redirect('../bulletin/post_detail/{post_id}/')
 
     if request.method == "POST":
-        form = Post(request.POST, instance=post)
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.modify_date = timezone.now()
@@ -83,7 +84,7 @@ def modify(request, post_id):
             post.save()
             return redirect('/bulletin/' + str(post.id), context)
     else:
-        form = Post(instance=post)
+        form = PostForm(instance=post)
     
     context = {'form': form}
     return render(request, 'bulletin/post_modify.html', context)

@@ -9,7 +9,7 @@ urlpatterns = [
     path('<int:post_id>/', views.post),
     # 글쓰기
     path('upload/', views.upload, name='upload'),
-	
+	# 수정, 삭제
     path('<int:post_id>/modify/', views.modify, name='modify'),
     path('<int:post_id>/delete/', views.delete, name='delete'),    
 ]

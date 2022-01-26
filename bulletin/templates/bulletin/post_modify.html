@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'bulletin/base.html' %}
 
 {% block content %}
 <div class="container">
@@ -18,9 +18,9 @@
         {% endif %}
         <!-- 오류표시 End -->
         <div class="form-group">
-            <label for="subject">제목</label>
-            <input type="text" class="form-control" name="subject"
-                value="{{ form.subject.value|default_if_none:'' }}" placeholder="제목을 입력하세요">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" name="title"
+                value="{{ form.title.value|default_if_none:'' }}" placeholder="제목을 입력하세요">
             </div>
             <br>
         <div class="form-group">
