@@ -3,6 +3,8 @@
 
 {%extends 'bulletin/tempExtendLayout.html'%}
 {%block content%}
+<p hidden>{{ post.update_counter }}</p>
+<p hidden>{{ post.view_count}}</p>
 
 <!--board html-->
 
@@ -37,6 +39,11 @@
         <div class="container">
             <br>
             <div>
+                <a href="{% url 'bulletin:delete' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
+                    <button type="button">삭제</button>
+                <a href="{% url 'bulletin:modify' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
+                    <button type="button">수정</button>
+                </a>
                 <button type="button" class="btn btn-default pull-right" onclick="location.href='../' ">
                     <b>📜목록</b>
                 </button>
@@ -49,26 +56,26 @@
                 <br><br>
                 <div class="contour"></div>
                 <br>
-                <b style="font-size:35px">{{feed.title}}</b>
+                <b style="font-size:35px">{{post.title}}</b>
                 <div></div>
                 <button type="button" aria-label="Left Align">
                     <b>작성자:  
-                        {% if not feed.user.name %}
+                        {% if not post.user.name %}
                             알 수 없음
                         {% else %}
-                            {{feed.user.name}}
+                            {{post.user.name}}
                         {% endif %}
                     </b>                
                 </button>
                 <div style="height: 0px; background-color: black"></div>
-                <p> time: {{feed.upload_time}}</p>
+                <p> time: {{post.upload_time}}</p>
                 <div class="contour"></div>
                 <br><br>
                 <p>
-                    {% if not feed.content %}
+                    {% if not post.content %}
                         내용 없음
                     {% else %}
-                        {{feed.content}}
+                        {{post.content}}
                     {% endif %}
                 </p>  
             </div>          

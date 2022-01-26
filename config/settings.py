@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'log_sign', 
     'bulletin', 
     'photo_zone',
-	'freeboard', 
+	
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

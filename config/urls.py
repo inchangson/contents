@@ -23,5 +23,4 @@ urlpatterns = [
     path('log_sign/', include('log_sign.urls')),
     # Bulletin
     path('bulletin/', include('bulletin.urls')),
-	path('freeboard/', include('freeboard.urls')),
 ]

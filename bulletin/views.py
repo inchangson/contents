@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .models import BulletinFeed
-from .forms import BulletinFeedForm
+from .forms import BulletinForm
+from django.db.models import Q
 from django.utils import timezone
 
 # Create your views here.
@@ -11,7 +12,7 @@ def board(request):
     # 게시판 (등록일 기준 최신 순- id desc)
     feeds = BulletinFeed.objects.all().order_by('-write_date')
     # query param 으로 넘어오는 page 값
-    current_page      = int(request.GET.get('page', 1))
+    current_page = int(request.GET.get('page', 1))
     # 한 페이지 당 5개 피드
     feed_count = 5
     paginator  = Paginator(feeds, feed_count)
@@ -32,64 +33,67 @@ def board(request):
     return render(request, 'bulletin/board.html', context)
 
 def feed(request, feed_id):
-    # feed = BulletinFeed.objects.get(id = feed_id)
+    # feed = Post.objects.get(id = feed_id)
     feed = get_object_or_404(BulletinFeed, id = feed_id)
     return render(request, 'bulletin/feed.html', {'feed':feed})
 
 def upload(request):
-    if request.method == "POST":
-        form = BulletinFeedForm(request.POST)
-        if form.is_valid():
-            feed = form.save(commit=False)
-            feed.upload_time = timezone.now()
-            feed.save()
-            return redirect("../")
-    else:
-        form = BulletinFeedForm()
-    return render(request, 'bulletin/upload.html', {'form':form})
-def modify(request, post_id):
     login_session = request.session.get('login_session', '')
     context = {'login_session' : login_session}
 
-    # post = get_object_or_404(Post, author_id=post_id)
-
-    context = {'post': post}
-
-    # if post.author.id != login_session:
-    #     return redirect('../freeboard/post_detail/{post_id}/')
-
     if request.method == 'GET':
-        form = PostForm(instance=post)
+        form = BulletinForm()
         context['forms'] = form
-        return render(request, 'freeboard/post_modify.html', context)
+        return render(request, 'bulletin/upload.html', context)
 
-    elif request.method == 'POST':
-        form = PostForm(request.POST)
-
+    elif request.method == "POST":
+        form = BulletinForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.subject = form.subject
-            post.content = form.content
-            post.modify_date = timezone.now()
-
-            post.save()
-            return redirect('/freeboard')
-
+            feed = form.save(commit=False)
+            feed.write_date = timezone.now()
+            feed.save()
+            return redirect("../")
         else:
             context['forms'] = form
             if form.errors:
                 for value in form.errors.values():
                     context['error'] = value
-            return render(request, 'freeboard/post_modify.html', context)
-
-
-def delete(request, post_id):
-    login_session = request.session.get('login_session', '')
-    # post = get_object_or_404(Post, author_id=post_id)
+            return render(request, 'bulletin/upload.html', context)
     
-    # if post.author.author_id != login_session:
-    #     return redirect('../freeboard/post_detail/{post_id}/')
-    # else:
-    #     post.author.author_id == login_session
-    #     post.delete()
-    #     return redirect('../freeboard')
+
+
+def modify(request, feed_id):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session' : login_session}
+
+    # post = get_object_or_404(Post, id=post_id)
+    feed = BulletinFeed.objects.get(id=feed_id)
+    
+
+    # if post.author.id != login_session:
+    #     return redirect('../bulletin/post_detail/{post_id}/')
+
+    if request.method == "POST":
+        form = BulletinForm(request.POST, instance=feed)
+        if form.is_valid():
+            feed = form.save(commit=False)
+            feed.modify_date = timezone.now()
+
+            feed.save()
+            return redirect('/bulletin/' + str(feed.id), context)
+    else:
+        form = BulletinForm(instance=feed)
+    
+    context = {'form': form}
+    return render(request, 'bulletin/post_modify.html', context)
+
+
+def delete(request, feed_id):
+    login_session = request.session.get('login_session', '')
+    feed = get_object_or_404(BulletinFeed, id=feed_id)
+    
+    context = {'feed': feed}
+
+    feed = BulletinFeed.objects.get(id=feed_id)
+    feed.delete()
+    return redirect('/bulletin')
