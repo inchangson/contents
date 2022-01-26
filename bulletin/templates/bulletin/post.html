@@ -8,11 +8,6 @@
     <div class="container">
         <br>
         <div>
-            <a href="{% url 'bulletin:delete' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
-                <button type="button">삭제</button>
-            <a href="{% url 'bulletin:modify' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
-                <button type="button">수정</button>
-            </a>
             <button type="button" class="btn btn-default pull-right" onclick="location.href='../' ">
                 <b>📜목록</b>
             </button>
@@ -24,6 +19,15 @@
         <div>
             <br><br>
             <div class="contour"></div>
+            {% if post.user.id == user.id %}    
+                <div>
+                    <a href="{% url 'bulletin:delete' post.id %}" type="button" class="btn btn-default pull-right" style="float: right; margin-right: 10px; margin-bottom: 10px">
+                        삭제
+                    <a href="{% url 'bulletin:modify' post.id %}" type="button" class="btn btn-default pull-right" style="float: right; margin-right: 10px; margin-bottom: 10px">
+                        수정
+                    </a>
+                </div>
+            {% endif %}
             <br>
             <b style="font-size:35px">{{post.title}}</b>   
             <a href="#" aria-label="Left Align" style="color:gray; text-decoration-line:underline">

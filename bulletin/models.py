@@ -15,7 +15,7 @@ class Post(models.Model):
     img_path    = models.CharField(max_length=255,  null=True)
     reply_count = models.IntegerField(default=0)
     user        = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
-	
+    view_count  = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.title
 
@@ -28,5 +28,5 @@ class BulletinReply(models.Model):
     content      = models.TextField()
     user         = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null = True)
-    view_count  = models.PositiveIntegerField(default=0)
+    
     
