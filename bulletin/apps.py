@@ -1,5 +1,5 @@
-from django.apps import AppConfig
+from django.apps import BulletinFeed
 
 
-class BulletinConfig(AppConfig):
+class BulletinFeed(AppConfig):
     name = 'bulletin'
