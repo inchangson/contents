@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .models import Post, BulletinReply
+from .models import Post, Reply
 from .forms import PostForm
 from django.utils import timezone
 # Create your views here.
@@ -33,10 +33,10 @@ def board(request):
 
 def post(request, post_id):
     post = get_object_or_404(Post, id = post_id)
-    reply_list = BulletinReply.objects.filter(post__id=post_id)
+    reply_list = Reply.objects.filter(post__id=post_id)
     if request.method == "POST":
 
-        reply   = BulletinReply()
+        reply   = Reply()
         reply.post = Post.objects.get(id = post_id)
         reply.user         = request.user
         reply.content      = request.POST.get('content')

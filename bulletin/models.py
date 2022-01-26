@@ -23,7 +23,7 @@ class Post(models.Model):
         self.view_count = self.view_count + 1
         self.save()
 
-class BulletinReply(models.Model):
+class Reply(models.Model):
     created_at   = models.DateTimeField(auto_now_add=True)
     content      = models.TextField()
     user         = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
