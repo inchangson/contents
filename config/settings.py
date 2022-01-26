@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'log_sign', 
-    'bulletin', 
+    'log_sign',
+    'bulletin',
     'photo_zone',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -123,14 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
 # Log_Sign
 AUTH_USER_MODEL = 'log_sign.User'
-LOGIN_REDIRECT_URL = '/log_sign/login/'
+LOGIN_REDIRECT_URL = '/log_sign/'
 LOGOUT_REDIRECT_URL = '/log_sign/login/'
 
 MEDIA_URL = '/media/'

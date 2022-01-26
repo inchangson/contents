@@ -1,51 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-{%extends 'bulletin/tempExtendLayout.html'%}
+{%extends 'bulletin/base.html'%}
 {%block content%}
-{{ post.update_counter }}
 
-<!--board html-->
+{% comment %} {{ post.update_counter }} {% endcomment %}
 
-<head>
-    <meta charset="UTF-8">
-    {% comment %} <meta http-equiv="X-UA-Compatible" content="IE=edge"> {% endcomment %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!--jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    
 
-    <title>MyPetDiary-Board</title>
-</head>
-<style>
-    .main_body{
-      display: flex;
-      background-color: whitesmoke; 
-      margin-right: 20px; 
-      margin-left: 20px; 
-      margin-top: 10px; 
-      margin-bottom: 10px;
-      height: 500px; 
-    }
-    .pagination {
-        display: flex;
-        padding-left: 0px;
-        list-style: none;
-        border-radius: 0.25rem;
-        justify-content: center;
-    }
-  </style>
-
-<body>
-    <div class="main_body">
+    <div class="bulletin_main_body">
         <div class="container">
             <br>
-            <h1 class="text-center"><a href="">📌자유 게시판</a>
+            <h1 class="text-center"><a href="#">📌자유 게시판</a>
                 <button type="button" class="btn btn-default pull-right" onclick="location.href='upload/' ">
                     <b>✋글쓰기</b>
                 </button>
@@ -106,7 +68,5 @@
     </div>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-</body>
 
 {%endblock%}
-</html>

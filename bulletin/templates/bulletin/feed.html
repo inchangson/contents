@@ -1,153 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-
-{%extends 'bulletin/tempExtendLayout.html'%}
+{%extends 'bulletin/base.html'%}
 {%block content%}
+
 <p hidden>{{ post.update_counter }}</p>
 <p hidden>{{ post.view_count}}</p>
 
-<!--board html-->
+<div class="main_body">
+    <div class="container">
+        <br>
+        <div>
+            <a href="{% url 'bulletin:delete' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
+                <button type="button">삭제</button>
+            <a href="{% url 'bulletin:modify' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
+                <button type="button">수정</button>
+            </a>
+            <button type="button" class="btn btn-default pull-right" onclick="location.href='../' ">
+                <b>📜목록</b>
+            </button>
+            <button id="btn_write" type="button" class="btn btn-default pull-right" onclick="location.href='../upload/' ">
+                <b>✋글쓰기</b>
+            </button>
+        </div>
 
-<head>
-    <meta charset="UTF-8">
-    {% comment %} <meta http-equiv="X-UA-Compatible" content="IE=edge"> {% endcomment %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    
-    <!--jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <!--axios -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
-    <title>MyPetDiary-Feed</title>
-</head>
-
-<style>
-    .main_body{
-      display: flex;
-      flex-direction: column;
-      background-color: whitesmoke; 
-      margin-right: 20px; 
-      margin-left: 20px; 
-      margin-top: 10px; 
-      margin-bottom: 10px;
-      height: 500px; 
-    }
-    .content_box{
-        color : white;
-        height: 100px;
-    }
-    .contour{
-        height: 2px; 
-        background-color: lightgrey;
-    }
-  </style>
-
-<body>
-    <div class="main_body">
-        <div class="container">
+        <div>
+            <br><br>
+            <div class="contour"></div>
             <br>
-            <div>
-                <a href="{% url 'bulletin:delete' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
-                    <button type="button">삭제</button>
-                <a href="{% url 'bulletin:modify' post.id %}" class="btn btn-default" style="float: right; margin-right: 10px; margin-bottom: 10px">
-                    <button type="button">수정</button>
-                </a>
-                <button type="button" class="btn btn-default pull-right" onclick="location.href='../' ">
-                    <b>📜목록</b>
-                </button>
-                <button id="btn_write" type="button" class="btn btn-default pull-right" onclick="location.href='../upload/' ">
-                    <b>✋글쓰기</b>
-                </button>
-                <a href="https://cloud.kt.com/" id = "t1">테스트</a>
-            </div>
-
-            <div>
-                <br><br>
-                <div class="contour"></div>
-                <br>
-                <b style="font-size:35px">{{post.title}}</b>
-                <div></div>
-                <button type="button" aria-label="Left Align">
-                    <b>작성자:  
-                        {% if not post.user.name %}
-                            알 수 없음
-                        {% else %}
-                            {{post.user.name}}
-                        {% endif %}
-                    </b>                
-                </button>
-                <div style="height: 0px; background-color: black"></div>
-                <p> time: {{post.upload_time}}</p>
-                <div class="contour"></div>
-                <br><br>
-                <p>
-                    {% if not post.content %}
-                        내용 없음
+            <b style="font-size:35px">{{feed.title}}</b>   
+            <a href="#" aria-label="Left Align" style="color:gray; text-decoration-line:underline">
+                    작성자 :    
+                    {% if feed.user.username %}
+                        {{feed.user.username}}
                     {% else %}
-                        {{post.content}}
-                    {% endif %}
-                </p>  
-            </div>          
-        </div>
+                        알 수 없음
+                    {% endif %}              
+            </a>
+            <div style="height: 0px; background-color: black"></div>
+            <p> time: {{post.write_date}}</p>
+            <div class="contour"></div>
+            <br><br>
+            <p>
+                {% if not post.content %}
+                    내용 없음
+                {% else %}
+                    {{post.content}}
+                {% endif %}
+            </p>  
+            <br><br><br><br>
+        </div>    
+    
+        <b>댓글</b>
+        <div class="contour"></div>
         <div class="container">
-            <input type="text" class="write_reply_input floating_input form-control" style="border: none;" id="floatingName" placeholder="댓글 달기...">
-            <span class="write_reply" feed_id="{{ feed.id }}" style="width: 200px; font-size: 16px; color: deepskyblue;font-weight: bold"> 게시 </span>
-        </div>
-        
-        <div class="feed_reply">
-            {% for reply in feed.reply_list %}
-                <span class="feed_txt"> <b> {{ reply.username }} </b> {{ reply.content }} </span>
+            {% for reply in reply_list %}
+                <b>{{reply.user.username}}</b>  |  {{reply.content}}
+                <br>
             {% endfor %}
         </div>
-
+        <br>
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+                <input name="content" type="text" style="width:100%" value="">
+                <br>
+                {% if user.is_authenticated %}
+                    <input type="submit" class="btn btn-basic pull-right" value="저장">
+                {% else %}                    
+                    <input type="submit" class="btn btn-basic pull-right" value="저장" disabled>
+                {% endif %}
+        </div>      
     </div>
+</div>
 
-  
-    <script>
-        $('.write_reply').click(function () {
-            console.log($(this).prev().val());
-            console.log($(this).attr('feed_id'));
-            let success = false;
-            let content = $(this).prev().val();
-            console.log(content);
-            let feed_id = Number($(this).attr('feed_id'));
-            console.log(feed_id)
-            console.log({{feed.user.id}})
+{% comment %} <script>
+    $('.write_reply').click(function () {
+        console.log($(this).prev().val());
+        console.log($(this).attr('feed_id'));
+        let success = false;
+        let content = $(this).prev().val();
+        console.log(content);
+        let feed_id = Number($(this).attr('feed_id'));
+        console.log(feed_id)
+        console.log({{feed.user.id}})
 
-            $.ajax({
-                url: "/bulletin/add_reply",
-                data: {
-                    user_id: '{{ user.id }}',
-                    content: content,
-                    feed_id: feed_id
-                },
-                method: "POST",
-                dataType: "json",
-                async: false,
-                success: function (data){
-                    alert(data.message);
-                    success=true
-                },
-                error:function (request, status, error){
-                    let data = JSON.parse(request.responseText);
-                    console.log(data.message);
-                    alert(data.message);
-                }
-            });
-            console.log(success)
-            if(success == true){
-                $(this).parent().prev().append('<span class="feed_txt"><b> {{ user.username }}</b> '+ content +' </span>');
-                $('.write_reply_input').val('');
+        $.ajax({
+            url: "/bulletin/add_reply",
+            data: {
+                user_id: '{{ user.id }}',
+                content: content,
+                feed_id: feed_id
+            },
+            method: "POST",
+            dataType: "json",
+            async: false,
+            success: function (data){
+                alert(data.message);
+                success=true
+            },
+            error:function (request, status, error){
+                let data = JSON.parse(request.responseText);
+                console.log(data.message);
+                alert(data.message);
             }
         });
-      </script>
+        console.log(success)
+        if(success == true){
+            $(this).parent().prev().append('<span class="feed_txt"><b> {{ user.username }}</b> '+ content +' </span>');
+            $('.write_reply_input').val('');
+        }
+    });
+    </script> {% endcomment %}
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 {%endblock%}
-</html>

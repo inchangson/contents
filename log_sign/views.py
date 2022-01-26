@@ -7,26 +7,31 @@ from rest_framework.views import APIView
 
 class Main(APIView):
     def get(self, request):
-        print(request.user.username)
-        print(request.user.email)
-        username = request.data.get('username')
-        user = User.objects.filter(user=username).first()
-        request.session['loginCheck'] = True
-        request.session['username'] = user.username
-        return render(request, 'photo_zone/main.html')
+        return render(request, 'log_sign/main.html')
 
 
 def signup(request):
     if request.method == 'POST':
-        print(request.POST)
+        # Check dupl. of User ID/Email
+        if User.objects.filter(username=request.POST['username']).exists() or User.objects.filter(email=request.POST["email"]).exists():
+            return render(request, 'log_sign/signup_error_id_email.html')
+
         username = request.POST["username"]
-        password = request.POST["password1"]
+        raw_password = request.POST["password1"]
+        password = request.POST["password2"]
+
+        # Check Password Typo
+        if raw_password != password:
+            return render(request, 'log_sign/signup_error_pw.html')
         petname = request.POST["petname"]
         email = request.POST["email"]
 
-        user = User.objects.create_user(username, email, password)
+        user = User.objects.create_user(username, email, raw_password)
         user.petname = petname
         user.save()
         return redirect("log_sign:login")
-    # return render(request, 'log_sign/signup.html', {'form': form})
     return render(request, 'log_sign/signup.html')
+
+
+def map(request):
+    return render(request, 'map.html')

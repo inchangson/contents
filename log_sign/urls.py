@@ -17,10 +17,11 @@ urlpatterns = [
 
     # LogOut
     path('logout/',
-         auth_views.LogoutView.as_view(),
+         auth_views.LogoutView.as_view(template_name='log_sign/main.html'),
          name='logout'
          ),
 
     # SignUp
     path('signup/', views.signup, name='signup'),
+    path('map/', views.map, name='map'),
 ]

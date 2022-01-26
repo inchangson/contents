@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+{% comment %} <html lang="en"> {% endcomment %}
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta http-equiv="X-UA-Compatible" content="IE=edge"> {% endcomment %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    
+    <!--jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    {% comment %} <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+        crossorigin="anonymous"
+    />     {% endcomment %}
+    
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    
+    <!--axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bulletin.css' %}?after" />
+    <!--css 변경이 안 되서 ?after 추가함-->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}?after" />
+    <!--map에 관련된 css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}?after" />
+    
+    
+    <title>MyPetDiary</title>
+</head>
+<body>
+    <a class="container-fluid">
+      <img
+        style="height: 60px; object-fit: contain"
+        src="https://img.insight.co.kr/static/2017/08/07/700/0h2p3f1om359z6j0141k.jpg"
+      />
+      <span style="font-size: 200%">𝕄𝕪 ℙ𝕖𝕥 𝔻𝕚𝕒𝕣𝕪</span>
+    </a>
+    <nav>
+      <ul class="nav-items">
+        <a>
+          {% if user.is_authenticated %} {{ user.petname }} 집사님 반갑습니다.
+          <li><a href="{% url 'log_sign:logout' %}">LogOut</a></li>
+          {% else %}
+          <p style="font-size: 15px">
+            <span
+              >Current | Guest
+              <a href="{% url 'log_sign:login' %}">Log In</a></span
+            >
+          </p>
+          {% endif %}
+        </a>
+      </ul>
+    </nav>
+  </header>
+  <br><br><br>
+    <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+    {% block content %}
+    {% endblock %}
+    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+</body>
+</html>

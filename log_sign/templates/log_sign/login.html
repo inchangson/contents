@@ -1,35 +1,50 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Pet Diary Log In</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 
-    {% if user.is_authenticated %}
-        <!-- <p>{{ user.username }} ({{ user.email }})님 반갑습니다.</p> -->
-        {{ user.petname }} 집사님 반갑습니다. 
-        <a class='nav-link' href="{% url 'log_sign:logout' %}">
-            (로그아웃)
-        </a>
-    {% else %}
+</head>
+<body>
+    <header>
+        <div class="container-fluid">
+            <img style="height: 60px; object-fit: contain"
+                src="https://img.insight.co.kr/static/2017/08/07/700/0h2p3f1om359z6j0141k.jpg">
+            <span style="font-size:200%">𝕄𝕪 ℙ𝕖𝕥 𝔻𝕚𝕒𝕣𝕪</span>
+        </div>
+    </header>
+</body>
+</html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <div class="container my-3">
+        <div class="row my-3">
+            <div class="col-12">
+                <h4>Come to Join Us!</h4>
+                <span><a>Hello, welcome to My Pet Diary :)</a></span>
+            </div>
+        </div>
+
         <form method="post" class="post-form" action="{% url 'log_sign:login' %}">
             {% csrf_token %}
             {% include "form_errors.html" %}
             <div class="form-group">
-                <label for="username">사용자ID</label>
-                <input type="text" class="form-control" name="username" id="username"
+                <label for="username">ID</label>
+                <input type="text" class="form-control" name="username" id="username" style="width: 400px;"
                     value="{{ form.username.value | default_if_none:'' }}">
             </div>
             <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input type="password" class="form-control" name="password" id="password"
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" style="width: 400px;"
                     value="{{ form.password.value | default_if_none:'' }}">
             </div>
-            <button type="submit" class="btn btn-info mt-3">로그인</button>
-
+            <button type="submit" class="btn btn-info mt-3">Log In</button>
+            <a href="{% url 'log_sign:signup' %}">
+                <button type="button" class="btn btn-info mt-3">Sign Up</button>
+            </a>
         </form>
-        
-        <a class='nav-link' href="{% url 'log_sign:signup' %}">
-            <button type="submit" class="btn btn-info mt-3">회원가입</button>
-        </a>
-        </form>
-        <p>현재 상태 : Guest</p>
-    {% endif %}
+        <p>Current : Guest</p>
 </div>
 <title>My Pet Diary Log In</title>

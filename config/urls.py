@@ -17,11 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.shortcuts import redirect
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # Main Page
+    path('', lambda request: redirect('log_sign/')),  # main page
     # Log-Sign
     path('log_sign/', include('log_sign.urls')),
+    # Photo_zone
     path('photo_zone/', include('photo_zone.urls')),
     # Bulletin
     path('bulletin/', include('bulletin.urls')),
